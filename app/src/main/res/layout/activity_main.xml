@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.slidingpanelayout.widget.SlidingPaneLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/issue_list_screen"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- The first child view becomes the left pane. When the combined
+    desired width (expressed using android:layout_width) would
+    not fit on-screen at once, the right pane is permitted to
+    overlap the left. -->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/issue_list_container"
+        android:layout_width="400dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@android:color/white"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvAppTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="Issue Tracker"
+            android:textSize="24dp"
+            android:fontFamily="sans-serif-condensed-medium"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvIssueList"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:fontFamily="sans-serif-condensed-medium"
+
+            app:layout_constraintBottom_toTopOf="@+id/tvInputIssue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvAppTitle" />
+
+        <Button
+            android:id="@+id/btnAddIssue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:backgroundTint="@color/teal_200"
+            android:text="Add Issue"
+            android:fontFamily="sans-serif-condensed-medium"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btnOpenMotionLayout"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/tvInputIssue" />
+
+        <Button
+            android:id="@+id/btnOpenMotionLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btnAddIssue"
+            android:backgroundTint="@color/teal_200"
+            android:text="Motion Layout"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="2dp"
+            android:fontFamily="sans-serif-condensed-medium" />
+
+        <EditText
+            android:id="@+id/tvInputIssue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/teal_200"
+            android:hint="Add Issue Here"
+            android:textSize="24dp"
+            android:fontFamily="sans-serif-condensed-medium"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btnAddIssue"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- The second child becomes the right (content) pane. In this
+    example, android:layout_weight is used to expand this detail pane
+    to consume leftover available space when the entire window is wide enough to fit both the left and right pane.-->
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/detail_container"
+        android:name="com.example.demodualappswl.IssueDetailFragment"
+        android:layout_width="460dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@android:color/holo_red_dark" />
+
+
+</androidx.slidingpanelayout.widget.SlidingPaneLayout>
