@@ -15,6 +15,7 @@ import android.util.SparseArray
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import androidx.window.DisplayFeature
@@ -27,6 +28,8 @@ import com.example.demodualappswl.fragments.SecondPageFragment
 import com.example.demodualappswl.fragments.ThirdPageFragment
 import com.example.demodualappswl.fragments.FourthPageFragment
 import com.example.demodualappswl.transformers.ZoomOutPageTransformer
+import com.example.demodualappswl.viewModels.IssueViewModel
+import com.example.demodualappswl.viewModels.PagerViewModel
 import java.util.concurrent.Executor
 
 
@@ -38,7 +41,7 @@ class TwoPageActivity : AppCompatActivity(), OnPageChangeListener {
     private lateinit var wm: WindowManager
     private val layoutStateChangeCallback = LayoutStateChangeCallback()
 
-    private var currPageIndex = 0
+    private lateinit var pagerViewModel: PagerViewModel
 
     private fun runOnUiThreadExecutor(): Executor {
         val handler = Handler(Looper.getMainLooper())
@@ -52,12 +55,18 @@ class TwoPageActivity : AppCompatActivity(), OnPageChangeListener {
         super.onCreate(savedInstanceState)
         wm = WindowManager(this)
 
+        setupPagerViewModel()
+
         setupToolbar()
 
         setupPagerAdapter()
 
         setContentView(R.layout.activity_two_page)
 
+    }
+
+    private fun setupPagerViewModel() {
+        pagerViewModel = ViewModelProviders.of(this)[PagerViewModel::class.java]
     }
 
     private fun setupToolbar() {
@@ -180,21 +189,19 @@ class TwoPageActivity : AppCompatActivity(), OnPageChangeListener {
 
         val pagerID = if(dualLandscapePager) R.id.pager_vert_scroll else R.id.pager_horiz_scroll
 
+        val currentPage = pagerViewModel.getPageSelectionLiveData().value ?: 0
+
         viewPager = findViewById<ViewPager>(pagerID).also {
             it.adapter = pagerAdapter
-            it.currentItem = currPageIndex
+            it.currentItem = currentPage
             it.addOnPageChangeListener(this)
         }
-
-        // this is if we want to override the animation (probably dont want to because of the dual screen -- it can get messy)
-        // viewPager.setPageTransformer(true, ZoomOutPageTransformer())
-
     }
 
     override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
 
     override fun onPageSelected(newPosition: Int) {
-        this.currPageIndex = newPosition
+        pagerViewModel.setPageSelectionLiveData(newPosition)
     }
 
     override fun onPageScrollStateChanged(state: Int) {}

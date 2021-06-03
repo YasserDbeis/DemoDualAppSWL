@@ -80,9 +80,21 @@ class MainActivity : AppCompatActivity(), IssueAdapter.OnItemClickListener {
 
     }
 
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        val lastSelectedIssue = model.getIssueSelectionLiveData().value
+        val tvIssueContent = findViewById<TextView>(R.id.tvIssueContent)
+        Log.d("Yasser", lastSelectedIssue.toString() + " " + (tvIssueContent == null).toString() + " " + model.issues.value?.size.toString())
+        if(lastSelectedIssue != null && tvIssueContent != null && model.issues.value?.size ?: -1 > lastSelectedIssue) {
+            tvIssueContent.text = issues[lastSelectedIssue].issueContent
+        }
+    }
+
     override fun onItemClick(position: Int) {
 
         slidingPane.open()
+
+        model.setIssueSelectionLiveData(position)
 
         val tvIssueContent = findViewById<TextView>(R.id.tvIssueContent)
         if(tvIssueContent != null) {
