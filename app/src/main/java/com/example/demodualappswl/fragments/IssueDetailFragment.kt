@@ -1,4 +1,4 @@
-package com.example.demodualappswl
+package com.example.demodualappswl.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater

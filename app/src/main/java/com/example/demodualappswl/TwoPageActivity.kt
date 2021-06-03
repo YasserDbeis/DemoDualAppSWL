@@ -21,7 +21,6 @@ import androidx.window.DisplayFeature
 import androidx.window.FoldingFeature
 import androidx.window.WindowLayoutInfo
 import androidx.window.WindowManager
-
 import com.example.demodualappswl.adapters.PagerAdapter
 import com.example.demodualappswl.fragments.FirstPageFragment
 import com.example.demodualappswl.fragments.SecondPageFragment

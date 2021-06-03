@@ -90,7 +90,7 @@
     to consume leftover available space when the entire window is wide enough to fit both the left and right pane.-->
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/detail_container"
-        android:name="com.example.demodualappswl.IssueDetailFragment"
+        android:name="com.example.demodualappswl.fragments.IssueDetailFragment"
         android:layout_width="460dp"
         android:layout_height="match_parent"
         android:layout_weight="1"

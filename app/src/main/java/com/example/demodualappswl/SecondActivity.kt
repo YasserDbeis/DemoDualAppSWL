@@ -89,11 +89,8 @@ class SecondActivity: AppCompatActivity() {
     }
 
     private fun layoutStateChangeHandler(newLayoutInfo: WindowLayoutInfo) {
-
         binding.tvFoldingFeatureInfo.text = newLayoutInfo.displayFeatures.toString()
-
     }
-
 
     inner class LayoutStateChangeCallback : Consumer<WindowLayoutInfo> {
         override fun accept(newLayoutInfo: WindowLayoutInfo) {
