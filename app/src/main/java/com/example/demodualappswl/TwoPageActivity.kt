@@ -13,8 +13,8 @@ import android.os.Looper
 import android.util.Log
 import android.util.SparseArray
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.util.Consumer
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
@@ -23,12 +23,7 @@ import androidx.window.FoldingFeature
 import androidx.window.WindowLayoutInfo
 import androidx.window.WindowManager
 import com.example.demodualappswl.adapters.PagerAdapter
-import com.example.demodualappswl.fragments.FirstPageFragment
-import com.example.demodualappswl.fragments.SecondPageFragment
-import com.example.demodualappswl.fragments.ThirdPageFragment
-import com.example.demodualappswl.fragments.FourthPageFragment
-import com.example.demodualappswl.transformers.ZoomOutPageTransformer
-import com.example.demodualappswl.viewModels.IssueViewModel
+import com.example.demodualappswl.fragments.PageFragment
 import com.example.demodualappswl.viewModels.PagerViewModel
 import java.util.concurrent.Executor
 
@@ -100,7 +95,7 @@ class TwoPageActivity : AppCompatActivity(), OnPageChangeListener {
         Single
     }
 
-    inner class LayoutStateChangeCallback : androidx.core.util.Consumer<WindowLayoutInfo> {
+    inner class LayoutStateChangeCallback : Consumer<WindowLayoutInfo> {
 
         override fun accept(newLayoutInfo: WindowLayoutInfo) {
             layoutStateChangeHandler(newLayoutInfo)
@@ -144,7 +139,8 @@ class TwoPageActivity : AppCompatActivity(), OnPageChangeListener {
                 setupViewPager(dualLandscapePager)
             }
 
-            pagerAdapter.pageContentScrollEnabled = !isDualScreen || !isPortrait
+            // this is customizable to your liking -- in this case I want scroll enabled everywhere
+            pagerAdapter.pageContentScrollEnabled = true
         }
 
         private fun isInPortrait(newLayoutInfo: WindowLayoutInfo) : Boolean {
@@ -174,10 +170,21 @@ class TwoPageActivity : AppCompatActivity(), OnPageChangeListener {
     private fun setupPagerAdapter() {
         val fragments = SparseArray<Fragment>()
 
-        fragments.put(0, FirstPageFragment())
-        fragments.put(1, SecondPageFragment())
-        fragments.put(2, ThirdPageFragment())
-        fragments.put(3, FourthPageFragment())
+        val pageContents = listOf<String>(getString(R.string.two_page_page1_text).repeat(20),
+                                        getString(R.string.two_page_page2_text1).repeat(20),
+                                        getString(R.string.two_page_page3_text1).repeat(20),
+                                        getString(R.string.two_page_page4_text1).repeat(20))
+
+        pageContents.forEachIndexed{index, pageContent ->
+            val args = Bundle()
+            args.putString("content", pageContent)
+            args.putInt("pageNumber", index + 1)
+
+            val pageFragment = PageFragment()
+            pageFragment.arguments = args
+
+            fragments.put(index, pageFragment)
+        }
 
         pagerAdapter = PagerAdapter(supportFragmentManager, fragments)
     }
@@ -187,7 +194,8 @@ class TwoPageActivity : AppCompatActivity(), OnPageChangeListener {
             viewPager.adapter = null
         }
 
-        val pagerID = if(dualLandscapePager) R.id.pager_vert_scroll else R.id.pager_horiz_scroll
+//        val pagerID = if(dualLandscapePager) R.id.pager_vert_scroll else R.id.pager_horiz_scroll
+        val pagerID = if(false) R.id.pager_vert_scroll else R.id.pager_horiz_scroll
 
         val currentPage = pagerViewModel.getPageSelectionLiveData().value ?: 0
 

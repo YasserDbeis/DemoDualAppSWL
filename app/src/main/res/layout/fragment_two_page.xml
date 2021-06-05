@@ -4,6 +4,7 @@
   ~
   -->
 
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -11,15 +12,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/two_page_page_padding"
-    android:background="@color/purple_200"
-
+    android:background="@color/white"
     tools:context=".TwoPageActivity">
 
     <ScrollView
-        android:id="@+id/page2_content"
+        android:id="@+id/page_content"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/page2_page_number"
+        app:layout_constraintBottom_toTopOf="@id/page_number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -28,20 +28,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/page2_title1"
-                style="@style/TwoPageText.Title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/two_page_medium_margin"
-                android:layout_marginTop="@dimen/two_page_medium_margin"
-                android:text="@string/two_page_page2_title1"
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="240dp"
+                android:layout_marginTop="30dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/two_page_rome_image"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/page2_text1"
+                android:id="@+id/page_text"
                 style="@style/TwoPageText.Content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -50,46 +51,25 @@
                 android:text="@string/two_page_page2_text1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/page2_title1" />
+                app:layout_constraintTop_toBottomOf="@+id/imageView"/>
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/page2_title2"
-                style="@style/TwoPageText.Title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/two_page_medium_margin"
-                android:layout_marginTop="@dimen/two_page_medium_margin"
-                android:text="@string/two_page_page2_title2"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/page2_text1" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/page2_text2"
-                style="@style/TwoPageText.Content"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/two_page_medium_margin"
-                android:layout_marginTop="@dimen/two_page_medium_margin"
-                android:text="@string/two_page_page2_text2"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/page2_title2" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
     <TextView
-        android:id="@+id/page2_page_number"
+        android:id="@+id/page_number"
         style="@style/TwoPageText.PageNumber"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/two_page_medium_margin"
         android:layout_marginEnd="@dimen/two_page_medium_margin"
         android:text="@string/two_page_page2_page_number"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/page2_content" />
+        app:layout_constraintTop_toBottomOf="@id/page_content" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

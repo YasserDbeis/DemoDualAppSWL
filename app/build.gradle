@@ -8,6 +8,10 @@ android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
+    configurations.all {
+        resolutionStrategy.force "androidx.window:window:1.0.0-alpha06"
+    }
+
     defaultConfig {
         applicationId "com.example.demodualappswl"
         minSdkVersion 24
@@ -40,7 +44,9 @@ android {
 dependencies {
     def fragment_version = "1.3.1"
     implementation "androidx.fragment:fragment-ktx:$fragment_version"
-    implementation "androidx.window:window:1.0.0-alpha07"
+    implementation "androidx.window:window:1.0.0-alpha06"
+
+
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.5.0'

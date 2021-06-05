@@ -33,12 +33,25 @@ class MainActivity : AppCompatActivity(), IssueAdapter.OnItemClickListener {
     lateinit var issues: MutableList<Issue>
     private lateinit var binding: ActivityMainBinding
 
+//    private lateinit var wm: WindowManager
+//    private val layoutStateChangeCallback = LayoutStateChangeCallback()
+//
+//    private fun runOnUiThreadExecutor(): Executor {
+//        val handler = Handler(Looper.getMainLooper())
+//        return Executor() {
+//            handler.post(it)
+//        }
+//    }
+
 
     private fun setTodoAdapter(issues: MutableList<Issue>) {
         issueAdapter = IssueAdapter(issues, this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+//        wm = WindowManager(this)
+
 
         super.onCreate(savedInstanceState)
 
@@ -61,6 +74,8 @@ class MainActivity : AppCompatActivity(), IssueAdapter.OnItemClickListener {
 
         binding.btnAddIssue.setOnClickListener {
             val inputText = binding.tvInputIssue.text
+
+            if(inputText.isBlank()) return@setOnClickListener
 
             val issue = Issue(inputText.toString(), inputText.toString())
             var copyIssues = issues.toMutableList()
@@ -88,7 +103,27 @@ class MainActivity : AppCompatActivity(), IssueAdapter.OnItemClickListener {
         if(lastSelectedIssue != null && tvIssueContent != null && model.issues.value?.size ?: -1 > lastSelectedIssue) {
             tvIssueContent.text = issues[lastSelectedIssue].issueContent
         }
+
+//        wm.registerLayoutChangeCallback(
+//            runOnUiThreadExecutor(),
+//            layoutStateChangeCallback
+//        )
     }
+
+//    override fun onDetachedFromWindow() {
+//        super.onDetachedFromWindow()
+//        wm.unregisterLayoutChangeCallback(layoutStateChangeCallback)
+//    }
+//
+//    private fun layoutStateChangeHandler(newLayoutInfo: WindowLayoutInfo) {
+//        binding.tvAppTitle.text = newLayoutInfo.displayFeatures.toString()
+//    }
+//
+//    inner class LayoutStateChangeCallback : Consumer<WindowLayoutInfo> {
+//        override fun accept(newLayoutInfo: WindowLayoutInfo) {
+//            layoutStateChangeHandler(newLayoutInfo)
+//        }
+//    }
 
     override fun onItemClick(position: Int) {
 
